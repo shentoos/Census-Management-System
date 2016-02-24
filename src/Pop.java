@@ -15,6 +15,7 @@ public class Pop{
 
 		Scanner scn = new Scanner(System.in);
 		String str;
+		System.out.println("welcome");
 		while(true){
 			str = scn.next();
 			if(str.equals("update")){
@@ -24,10 +25,9 @@ public class Pop{
 				Integer f = scn.nextInt();
 				System.out.println("starting update!");
 				update_data(cnt,y,m,f);
-<<<<<<< HEAD
 				System.out.println("updated!");
-=======
-			}else if(str.equals("get")){
+			}
+			else if(str.equals("get")){
 				System.out.println("Enter the country");
 				String country = scn.next();
 				System.out.println("Enter the year");
@@ -36,7 +36,6 @@ public class Pop{
 				String filename = scn.next();
 				System.out.println(getPop(country, year,filename));
 				
->>>>>>> 81d99a2c0cf5f633133a6d6940a981c1294f2c90
 			}
 
 		}
