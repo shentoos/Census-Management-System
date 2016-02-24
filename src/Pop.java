@@ -20,6 +20,7 @@ public class Pop{
 				Integer y = scn.nextInt();
 				Integer m = scn.nextInt();
 				Integer f = scn.nextInt();
+				System.out.println("starting update!");
 				update_data(cnt,y,m,f);
 			}
 		}
