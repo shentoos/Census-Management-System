@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class Pop{
 	public static void main(String[] args) throws Exception{
-		System.out.println(getPop("Burundi", 1959,"Est_Male.csv"));
 
 		Scanner scn = new Scanner(System.in);
 		String str;
@@ -24,7 +23,17 @@ public class Pop{
 				Integer m = scn.nextInt();
 				Integer f = scn.nextInt();
 				update_data(cnt,y,m,f);
+			}else if(str.equals("get")){
+				System.out.println("Enter the country");
+				String country = scn.next();
+				System.out.println("Enter the year");
+				Integer year = scn.nextInt();
+				System.out.println("Enter the file name like:Est_Female.csv");
+				String filename = scn.next();
+				System.out.println(getPop(country, year,filename));
+				
 			}
+
 		}
 	}
 	/* write your functions here*/
