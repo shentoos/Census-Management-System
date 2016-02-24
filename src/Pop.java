@@ -22,13 +22,16 @@ public class Pop{
 				Integer f = scn.nextInt();
 				System.out.println("starting update!");
 				update_data(cnt,y,m,f);
+				System.out.println("updated!");
 			}
 		}
 	}
 	/* write your functions here*/
 	private static void update_data(String cnt, Integer y, Integer m , Integer f) throws IOException{
 		BufferedReader fReader = new BufferedReader(new FileReader(new File("Data/Est_Female.csv")));
-	    String rawData = fReader.readLine();
+		
+	    String rawData = "";
+	    rawData +=fReader.readLine();
 	    String header[] = rawData.split(",");
 	    int yind=0;
 	    for(int i=0; i<header.length; i++){
@@ -41,14 +44,17 @@ public class Pop{
 	    String mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	if(spl[2].equals(cnt)){
+	    	if(spl[2].trim().equals(cnt.trim())){
 	    		spl[yind] = String.valueOf(f);
 	    	}
 	    	mydata+="\n";
 	    	for(int i=0; i<spl.length; i++){
-	    		mydata+=spl[i]+",";
+	    		mydata+=spl[i];
+	    		if(i!=spl.length-1)
+	    			mydata+=",";
 	    	}
 	    }
+	    mydata+="\n";
 	    fReader.close();
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Female.csv"), true)));
 		pw.write(mydata);
@@ -59,15 +65,18 @@ public class Pop{
 	    mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	if(spl[2].equals(cnt)){
+	    	if(spl[2].trim().equals(cnt.trim())){
 	    		System.out.println(rawData);
-	    		spl[yind] = String.valueOf(f);
+	    		spl[yind] = String.valueOf(m);
 	    	}
 	    	mydata+="\n";
 	    	for(int i=0; i<spl.length; i++){
-	    		mydata+=spl[i]+",";
+	    		mydata+=spl[i];
+	    		if(i!=spl.length-1)
+	    			mydata+=",";
 	    	}
 	    }
+	    mydata+="\n";
 	    fReader.close();
 		pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Male.csv"), true)));
 		pw.write(mydata);
