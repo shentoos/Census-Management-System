@@ -16,26 +16,60 @@ public class Pop{
 		while(true){
 			str = scn.next();
 			if(str.equals("update")){
-				System.out.println("HOI");
 				String cnt = scn.next();
+				Integer y = scn.nextInt();
 				Integer m = scn.nextInt();
 				Integer f = scn.nextInt();
-				update_data(cnt,m,f);
+				update_data(cnt,y,m,f);
 			}
 		}
 	}
 	/* write your functions here*/
-	private static void update_data(String cnt, Integer m , Integer f) throws IOException{
-		BufferedReader fReader = new BufferedReader(new FileReader(new File("../Data/Est_Female.csv")));
+	private static void update_data(String cnt, Integer y, Integer m , Integer f) throws IOException{
+		BufferedReader fReader = new BufferedReader(new FileReader(new File("Data/Est_Female.csv")));
 	    String rawData = fReader.readLine();
-	    System.out.println(rawData);
+	    String header[] = rawData.split(",");
+	    int yind=0;
+	    for(int i=0; i<header.length; i++){
+			if(header[i].trim().equals(String.valueOf(y))){
+				yind=i;
+			}
+		}
+	    
+	    System.out.println(yind);
 	    String mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	mydata+=rawData;
+	    	if(spl[2].equals(cnt)){
+	    		spl[yind] = String.valueOf(f);
+	    	}
+	    	mydata+="\n";
+	    	for(int i=0; i<spl.length; i++){
+	    		mydata+=spl[i]+",";
+	    	}
 	    }
 	    fReader.close();
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_female.csv"), true)));
-
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Female.csv"), true)));
+		pw.write(mydata);
+		pw.close();
+		fReader = new BufferedReader(new FileReader(new File("Data/Est_Male.csv")));
+	    rawData = fReader.readLine();
+	    header = rawData.split(",");
+	    mydata = rawData;
+	    while ((rawData = fReader.readLine()) != null) {
+	    	String spl[] = rawData.split(",");
+	    	if(spl[2].equals(cnt)){
+	    		System.out.println(rawData);
+	    		spl[yind] = String.valueOf(f);
+	    	}
+	    	mydata+="\n";
+	    	for(int i=0; i<spl.length; i++){
+	    		mydata+=spl[i]+",";
+	    	}
+	    }
+	    fReader.close();
+		pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Male.csv"), true)));
+		pw.write(mydata);
+		pw.close();
 	}
 }
