@@ -6,11 +6,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Pop{
 	public static void main(String[] args) throws Exception{
+		System.out.println(getPop("Burundi", 1959,"Est_Male.csv"));
+
 		Scanner scn = new Scanner(System.in);
 		String str;
 		while(true){
@@ -73,4 +76,24 @@ public class Pop{
 		pw.close();
 	}
 	//this is where negar's function will be put
+	public static String getPop(String country, int year,String filename) throws IOException{
+		
+		int ef_year = (year -1950);
+		BufferedReader dataReader = new BufferedReader(new FileReader("Data/"+filename));
+	    String line = "";
+	    String val = "";
+	    while ((line = dataReader.readLine()) != null) {
+	    	String[] raw = line.split(",");
+	    	ArrayList<String> rawArray = new ArrayList<String>();
+	    	for (int i = 0; i < raw.length; i++) {
+				rawArray.add(raw[i]);
+			}
+	    	if(rawArray.contains(country)){
+	    		val =  rawArray.get(5+ef_year);
+	    	}
+	    }
+	    dataReader.close();
+	    return val;
+	}
+
 }
