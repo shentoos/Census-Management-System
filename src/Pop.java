@@ -53,7 +53,8 @@ public class Pop{
 				yind=i;
 			}
 		}
-	    
+	    //added becasue 1950 got translated to 1952
+	    yind=yind-2;
 	    System.out.println(yind);
 	    String mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
@@ -70,7 +71,7 @@ public class Pop{
 	    }
 	    mydata+="\n";
 	    fReader.close();
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Female.csv"), true)));
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Female.csv"), false)));
 		pw.write(mydata);
 		pw.close();
 		fReader = new BufferedReader(new FileReader(new File("Data/Est_Male.csv")));
@@ -92,7 +93,7 @@ public class Pop{
 	    }
 	    mydata+="\n";
 	    fReader.close();
-		pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Male.csv"), true)));
+		pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Male.csv"), false)));
 		pw.write(mydata);
 		pw.close();
 	}
