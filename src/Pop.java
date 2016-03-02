@@ -20,7 +20,7 @@ import org.jfree.ui.RefineryUtilities;
 
 public class Pop{
 	public static void main(String[] args) throws Exception{
-
+		/*..*/
 		Scanner scn = new Scanner(System.in);
 		String str;
 		System.out.println("welcome");
