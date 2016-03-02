@@ -34,9 +34,13 @@ public class Pop{
 				Integer y = scn.nextInt();
 				Integer m = scn.nextInt();
 				Integer f = scn.nextInt();
-				System.out.println("starting update!");
-				update_data(cnt,y,m,f);
-				System.out.println("updated!");
+				if(!isProtected(cnt)){
+					update_data(cnt,y,m,f);
+					System.out.println("The information of this country has been updated!");
+				}
+				else{
+					System.out.println("The information of this country is protected. You can not change it!");
+				}
 			}
 			else if(str.equals("get")){
 				scn.nextLine();
@@ -52,6 +56,16 @@ public class Pop{
 			else if(str.equals("populationChart")){
 				String cntr = scn.next();
 				BuildCharts(cntr);
+			}
+			else if(str.equals("setPermission")){
+				scn.nextLine();
+				String cnt, p;
+				System.out.println("Enter the country i.e India");
+				cnt = scn.nextLine().replaceAll("\\s+", "");
+				System.out.println("the permission status(0 means not protected and 1 means protected)");
+				p = scn.next().replaceAll("\\s+", "");
+				setPermission(cnt, p);
+				System.out.println("Permission has been updated!");
 			}
 			else
 				System.out.println("command is not defiend!");
@@ -161,6 +175,41 @@ public class Pop{
 		chart.pack( );        
 	    RefineryUtilities.centerFrameOnScreen( chart );        
 	    chart.setVisible( true );
+	}
+	public static boolean isProtected(String country) throws IOException{
+		BufferedReader fReader = new BufferedReader(new FileReader("Data/Permission.csv"));
+		String rawData = "";
+		boolean ans = true;
+	    while ((rawData = fReader.readLine()) != null) {
+	    	String spl[] = rawData.split(",");
+	    	if(spl[0].replaceAll("\\s+","").equals(country.replaceAll("\\s+",""))){
+	    		if(spl[1].replaceAll("\\s+", "").equals("0")){
+	    			ans = false;
+	    			break;
+	    		}
+	    	}
+	    }
+	    fReader.close();
+	    return ans;
+	}
+	public static void setPermission(String country, String p) throws IOException{
+		BufferedReader fReader = new BufferedReader(new FileReader("Data/Permission.csv"));
+		String rawData = "";
+		String totData = "";
+	    while ((rawData = fReader.readLine()) != null) {
+	    	String spl[] = rawData.split(",");
+	    	if(spl[0].replaceAll("\\s+","").equals(country.replaceAll("\\s+",""))){
+	    		if(p.replaceAll("\\s+","").equals("1"))
+	    			spl[1]="1";
+	    		else
+	    			spl[1]="0";
+	    	}
+	    	totData+=spl[0]+","+spl[1]+"\n";
+	    }
+	    fReader.close();
+	    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Male.csv"), false)));
+		pw.write(totData);
+		pw.close();
 	}
 	//this is where negar's function will be put
 	public static String getPop(String country, int year,String filename) throws IOException{
