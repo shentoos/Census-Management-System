@@ -8,7 +8,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel; 
 import org.jfree.chart.JFreeChart; 
@@ -28,11 +34,13 @@ public class Pop{
 			str = scn.next();
 			if(str.equals("update")){
 				scn.nextLine();
-				System.out.println("Enter Country Year MalePop FemalePop");
+				System.out.println("Enter Country");
 				String cnt = scn.nextLine().replaceAll("\\s+", "");
-
+				System.out.println("Enter Year"); 
 				Integer y = scn.nextInt();
+				System.out.println("Enter Male Pop");
 				Integer m = scn.nextInt();
+				System.out.println("Enter Female Pop");
 				Integer f = scn.nextInt();
 				System.out.println("starting update!");
 				update_data(cnt,y,m,f);
@@ -52,6 +60,14 @@ public class Pop{
 			else if(str.equals("populationChart")){
 				String cntr = scn.next();
 				BuildCharts(cntr);
+			}
+			else if(str.equals("sort")){
+				scn.nextLine();
+				System.out.println("Enter the year");
+				Integer year = scn.nextInt();
+				System.out.println("Enter the Male or Female");
+				String filename = scn.next();
+				PopSort(year, "Est_"+filename+".csv");
 			}
 			else
 				System.out.println("command is not defiend!");
@@ -182,6 +198,40 @@ public class Pop{
 	    dataReader.close();
 	    return val;
 	}
+	
+	//feature5
+public static void PopSort(int year,String filename) throws IOException{
+		
+		int ef_year = (year-1950);
+		BufferedReader dataReader = new BufferedReader(new FileReader("Data/"+filename));
+	    String line = "";
+	    String val = "";
+    	HashMap<Integer,String> hmap= new HashMap<Integer,String>();
+    	for (int i = 0; i < 13; i++) {
+    		line = dataReader.readLine();
+		}
+	    while ((line = dataReader.readLine()) != null) {
+	    	String[] raw = line.split(",");
+	    	ArrayList<String> rawArray = new ArrayList<String>();
+	    	for (int i = 0; i < raw.length; i++) {
+				rawArray.add(raw[i].replaceAll("\\s+",""));
+			}
+	    	String keshvar =rawArray.get(2);
+	    	val =  rawArray.get(5+ef_year);
+	    	hmap.put(Integer.parseInt(val.replaceAll("\\s+","")),keshvar);
+	    }
+	    dataReader.close();
+	    Map<Integer,String> mapp= new TreeMap<Integer,String>(hmap);
+	    
+	    Set set= mapp.entrySet();
+	    Iterator it = set.iterator();
+	    while(it.hasNext()){
+	    	Map.Entry m= (Map.Entry)it.next();
+	    	System.out.println(m.getKey()+" : "+ m.getValue());
+	    	}
+	}
+
+
 
 }
 
