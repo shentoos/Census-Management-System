@@ -81,7 +81,7 @@ public class Pop{
 				scn.nextLine();
 				System.out.println("Enter the year");
 				Integer year = scn.nextInt();
-				System.out.println("Enter the Male or Female");
+				System.out.println("Enter the Male or Female or PopulationGrowthRate or RateofNaturalIncrease");
 				String filename = scn.next();
 				PopSort(year, "Est_"+filename+".csv");
 			}
@@ -217,7 +217,7 @@ public class Pop{
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
 	    	if(spl[0].replaceAll("\\s+","").equals(country.replaceAll("\\s+",""))){
-	    		System.out.println("HEy" + p + spl[0]);
+//	    		System.out.println("HEy" + p + spl[0]);
 	    		if(p.replaceAll("\\s+","").equals("1"))
 	    			spl[1]="1";
 	    		else
@@ -253,40 +253,48 @@ public class Pop{
 	
 	//feature5
 public static void PopSort(int year,String filename) throws IOException{
-		
-		int ef_year = (year-1950);
-		BufferedReader dataReader = new BufferedReader(new FileReader("Data/"+filename));
-	    String line = "";
-	    String val = "";
-    	HashMap<Integer,String> hmap= new HashMap<Integer,String>();
-    	for (int i = 0; i < 13; i++) {
-    		line = dataReader.readLine();
-		}
-	    while ((line = dataReader.readLine()) != null) {
-	    	String[] raw = line.split(",");
-	    	ArrayList<String> rawArray = new ArrayList<String>();
-	    	for (int i = 0; i < raw.length; i++) {
-				rawArray.add(raw[i].replaceAll("\\s+",""));
-			}
-	    	String keshvar =rawArray.get(2);
-	    	val =  rawArray.get(5+ef_year);
-	    	hmap.put(Integer.parseInt(val.replaceAll("\\s+","")),keshvar);
-	    }
-	    dataReader.close();
-	    Map<Integer,String> mapp= new TreeMap<Integer,String>(hmap);
-	    
-	    Set set= mapp.entrySet();
-	    Iterator it = set.iterator();
-	    while(it.hasNext()){
-	    	Map.Entry m= (Map.Entry)it.next();
-	    	System.out.println(m.getKey()+" : "+ m.getValue());
-	    	}
+	
+	int ef_year;
+
+	if(filename.equals("Est_PopulationGrowthRate.csv") || filename.equals("Est_RateofNaturalIncrease.csv")){
+		ef_year = (year-1950)/5;
+
+	}else{
+		ef_year = (year-1950);
+
 	}
-
-
-
+	
+	BufferedReader dataReader = new BufferedReader(new FileReader("Data/"+filename));
+    String line = "";
+    String val = "";
+	HashMap<Double,String> hmap= new HashMap<Double,String>();
+	for (int i = 0; i < 13; i++) {
+		line = dataReader.readLine();
+	}
+    while ((line = dataReader.readLine()) != null) {
+    	String[] raw = line.split(",");
+    	ArrayList<String> rawArray = new ArrayList<String>();
+    	for (int i = 0; i < raw.length; i++) {
+			rawArray.add(raw[i].replaceAll("\\s+",""));
+		}
+    	String keshvar =rawArray.get(2);
+    	val =  rawArray.get(5+ef_year);
+    	hmap.put(Double.parseDouble(val.replaceAll("\\s+","")),keshvar);
+    }
+    dataReader.close();
+    Map<Double,String> mapp= new TreeMap<Double,String>(hmap);
+    
+    Set set= mapp.entrySet();
+    Iterator it = set.iterator();
+    while(it.hasNext()){
+    	Map.Entry m= (Map.Entry)it.next();
+    	System.out.println(m.getKey()+" : "+ m.getValue());
+    	}
+    
+    
 }
 
+}
 class BarChart_AWT extends ApplicationFrame
 {
    public BarChart_AWT( String applicationTitle , String chartTitle, String xAxis, String yAxis, String[] xData, Integer[] mData, Integer[] fData)
