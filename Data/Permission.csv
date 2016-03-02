@@ -2,8 +2,8 @@ WORLD,0
 More developed regions,0
 Less developed regions,0
 Least developed countries,0
-"""Less developed regions,  excluding least developed countries""",0
-"""Less developed regions,  excluding China""",0
+"""Less developed regions,  excluding least developed countries"""
+"""Less developed regions,  excluding China"""
 High-income countries,0
 Middle-income countries,0
 Upper-middle-income countries,0
@@ -76,8 +76,8 @@ Togo,0
 ASIA,0
 Eastern Asia,0
 China,0
-"""China,  Hong Kong SAR""",0
-"""China, Macao SAR""",0
+"""China,  Hong Kong SAR"""
+"""China, Macao SAR"""
 Dem. People's Republic of Korea,0
 Japan,0
 Mongolia,0
@@ -94,7 +94,7 @@ Southern Asia,0
 Afghanistan,0
 Bangladesh,0
 Bhutan,0
-India,0
+India,1
 Iran (Islamic Republic of),0
 Maldives,0
 Nepal,0

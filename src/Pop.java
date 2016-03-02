@@ -25,14 +25,18 @@ public class Pop{
 		String str;
 		System.out.println("welcome");
 		while(true){
+			System.out.println("Enter Command:");
 			str = scn.next();
 			if(str.equals("update")){
 				scn.nextLine();
-				System.out.println("Enter Country Year MalePop FemalePop");
+				System.out.println("Enter Country (i.e India)");
+				
 				String cnt = scn.nextLine().replaceAll("\\s+", "");
-
+				System.out.println("Enter Year");
 				Integer y = scn.nextInt();
+				System.out.println("Enter Male Population");
 				Integer m = scn.nextInt();
+				System.out.println("Enter Female Population");
 				Integer f = scn.nextInt();
 				if(!isProtected(cnt)){
 					update_data(cnt,y,m,f);
@@ -199,6 +203,7 @@ public class Pop{
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
 	    	if(spl[0].replaceAll("\\s+","").equals(country.replaceAll("\\s+",""))){
+	    		System.out.println("HEy" + p + spl[0]);
 	    		if(p.replaceAll("\\s+","").equals("1"))
 	    			spl[1]="1";
 	    		else
@@ -207,7 +212,7 @@ public class Pop{
 	    	totData+=spl[0]+","+spl[1]+"\n";
 	    }
 	    fReader.close();
-	    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Est_Male.csv"), false)));
+	    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("Data/Permission.csv"), false)));
 		pw.write(totData);
 		pw.close();
 	}
