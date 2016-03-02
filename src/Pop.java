@@ -27,7 +27,10 @@ public class Pop{
 		while(true){
 			str = scn.next();
 			if(str.equals("update")){
-				String cnt = scn.next();
+				scn.nextLine();
+				System.out.println("Enter Country Year MalePop FemalePop");
+				String cnt = scn.nextLine().replaceAll("\\s+", "");
+
 				Integer y = scn.nextInt();
 				Integer m = scn.nextInt();
 				Integer f = scn.nextInt();
@@ -36,13 +39,14 @@ public class Pop{
 				System.out.println("updated!");
 			}
 			else if(str.equals("get")){
+				scn.nextLine();
 				System.out.println("Enter the country");
-				String country = scn.next();
+				String country = scn.nextLine().replaceAll("\\s+","");
 				System.out.println("Enter the year");
 				Integer year = scn.nextInt();
-				System.out.println("Enter the file name like:Est_Female.csv");
+				System.out.println("Enter the Male or Female");
 				String filename = scn.next();
-				System.out.println(getPop(country, year,filename));
+				System.out.println(getPop(country, year,"Est_"+filename+".csv"));
 				
 			}
 			else if(str.equals("populationChart")){
@@ -63,17 +67,17 @@ public class Pop{
 	    String header[] = rawData.split(",");
 	    int yind=0;
 	    for(int i=0; i<header.length; i++){
-			if(header[i].trim().equals(String.valueOf(y))){
+			if(header[i].replaceAll("\\s+","").equals(String.valueOf(y))){
 				yind=i;
 			}
 		}
 	    //added becasue 1950 got translated to 1952
 	    yind=yind-2;
-	    System.out.println(yind);
+//	    System.out.println(yind);
 	    String mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	if(spl[2].trim().equals(cnt.trim())){
+	    	if(spl[2].replaceAll("\\s+","").equals(cnt.replaceAll("\\s+",""))){
 	    		spl[yind] = String.valueOf(f);
 	    	}
 	    	mydata+="\n";
@@ -94,8 +98,8 @@ public class Pop{
 	    mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	if(spl[2].trim().equals(cnt.trim())){
-	    		System.out.println(rawData);
+	    	if(spl[2].replaceAll("\\s+","").equals(cnt.replaceAll("\\s+",""))){
+//	    		System.out.println(rawData);
 	    		spl[yind] = String.valueOf(m);
 	    	}
 	    	mydata+="\n";
@@ -130,7 +134,7 @@ public class Pop{
 	    String mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	if(spl[2].trim().equals(cntry.trim())){
+	    	if(spl[2].replaceAll("\\s+","").equals(cntry.replaceAll("\\s+",""))){
 	    		for(int i=0; i<(spl.length-5); i++){
 	    			fData[i] = Integer.valueOf(spl[i+5].replaceAll("\\s+",""));
 	    			//System.out.println(i+" "+fData[i]);
@@ -145,7 +149,7 @@ public class Pop{
 	    mydata = rawData;
 	    while ((rawData = fReader.readLine()) != null) {
 	    	String spl[] = rawData.split(",");
-	    	if(spl[2].trim().equals(cntry.trim())){
+	    	if(spl[2].replaceAll("\\s+","").equals(cntry.replaceAll("\\s+",""))){
 	    		for(int i=0; i<(spl.length-5); i++){
 	    			mData[i] = Integer.valueOf(spl[i+5].replaceAll("\\s+",""));
 	    			//System.out.println(i+" "+mData[i]);
@@ -169,7 +173,7 @@ public class Pop{
 	    	String[] raw = line.split(",");
 	    	ArrayList<String> rawArray = new ArrayList<String>();
 	    	for (int i = 0; i < raw.length; i++) {
-				rawArray.add(raw[i]);
+				rawArray.add(raw[i].replaceAll("\\s+",""));
 			}
 	    	if(rawArray.contains(country)){
 	    		val =  rawArray.get(5+ef_year);
